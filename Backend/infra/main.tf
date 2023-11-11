@@ -17,163 +17,348 @@ locals {
   function_name_contribution = "contribution"
   function_name_donate = "donate"
   function_name_event_get = "event_get"
+  
   function_name_login = "login"
   function_name_map_data_get = "map_data_get"
   function_name_register = "register"
+
   handler_name  = "main.lambda_handler"
+
   artifact_name_contribution = "contribution_artifact.zip"
   artifact_name_donate = "donate_artifact.zip"
   artifact_name_event_get = "event_get_artifact.zip"
+
   artifact_name_login = "login_artifact.zip"
   artifact_name_map_data_get = "map_data_get_artifact.zip"
   artifact_name_register = "register_artifact.zip"
 }
 
-# # create archive file from main.py
-# data "archive_file" "lambda-SS_get_dates" {
-#   type = "zip"
-#   # this file (main.py) needs to exist in the same folder as this 
-#   # Terraform configuration file
-#   source_dir = "../functions/SS_get_dates"
-#   output_path = local.artifact_name_get
-# }
 
-# # create a Lambda function
-# # see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function
-# resource "aws_lambda_function" "SS_get_dates" {
-#   # s3_bucket        = aws_s3_bucket.lambda.bucket
-#   # s3_key           = local.artifact_name_get
-#   role             = aws_iam_role.lambda-SS_get_dates.arn
-#   function_name    = local.function_name_SS_get_dates
-#   handler          = local.handler_name
-#   filename         = local.artifact_name_get
-#   source_code_hash = data.archive_file.lambda-SS_get_dates.output_base64sha256
+### FUNCTIONS ###
 
-#   # see all available runtimes here: https://docs.aws.amazon.com/lambda/latest/dg/API_CreateFunction.html#SSS-CreateFunction-request-Runtime
-#   runtime = "python3.9"
-# }
+#***login***#
+# create archive file from main.py
+data "archive_file" "zip_login" {
+  type = "zip"
+  # this file (main.py) needs to exist in the same folder as this 
+  # Terraform configuration file
+  source_dir = "../functions/login"
+  output_path = local.artifact_name_login
+}
 
-# # create a Function URL for Lambda 
-# # see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function_url
-# resource "aws_lambda_function_url" "url_SS_get_dates" {
-#   function_name      = aws_lambda_function.SS_get_dates.function_name
-#   authorization_type = "NONE"
+# create a Lambda function
+# see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function
+resource "aws_lambda_function" "login" {
+  # s3_bucket        = aws_s3_bucket.lambda.bucket
+  # s3_key           = local.artifact_name_get
+  role             = aws_iam_role.lambda-login.arn
+  function_name    = local.function_name_login
+  handler          = local.handler_name
+  filename         = local.artifact_name_get
+  source_code_hash = data.archive_file.lambda-login.output_base64sha256
 
-#   cors {
-#     allow_credentials = true
-#     allow_origins     = ["*"]
-#     allow_methods     = ["GET"]
-#     allow_headers     = ["*"]
-#     expose_headers    = ["keep-alive", "date"]
-#   }
-# }
+  # see all available runtimes here: https://docs.aws.amazon.com/lambda/latest/dg/API_CreateFunction.html#SSS-CreateFunction-request-Runtime
+  runtime = "python3.9"
+}
 
-# resource "aws_lambda_function_url" "url_SS_add_dates" {
-#   function_name      = aws_lambda_function.SS_add_dates.function_name
-#   authorization_type = "NONE"
+# create a Function URL for Lambda 
+# see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function_url
+resource "aws_lambda_function_url" "url_login" {
+  function_name      = aws_lambda_function.login.function_name
+  authorization_type = "NONE"
 
-#   cors {
-#     allow_credentials = true
-#     allow_origins     = ["*"]
-#     allow_methods     = ["POST"]
-#     allow_headers     = ["*"]
-#     expose_headers    = ["keep-alive", "date"]
-#   }
-# }
+  cors {
+    allow_credentials = true
+    allow_origins     = ["*"]
+    allow_methods     = ["GET"]
+    allow_headers     = ["*"]
+    expose_headers    = ["keep-alive", "date"]
+  }
+}
 
-# resource "aws_lambda_function_url" "url_SS_add_schedule" {
-#   function_name      = aws_lambda_function.SS_add_schedule.function_name
-#   authorization_type = "NONE"
+# show the Function URL after creation
+output "lambda_url-login" {
+  value = aws_lambda_function_url.url_login.function_url
+}
 
-#   cors {
-#     allow_credentials = true
-#     allow_origins     = ["*"]
-#     allow_methods     = ["POST"]
-#     allow_headers     = ["*"]
-#     expose_headers    = ["keep-alive", "date"]
-#   }
-# }
 
-# resource "aws_lambda_function_url" "url_SS_get_schedule" {
-#   function_name      = aws_lambda_function.SS_get_schedule.function_name
-#   authorization_type = "NONE"
+#***register***#
+# create archive file from main.py
+data "archive_file" "zip_register" {
+  type = "zip"
+  # this file (main.py) needs to exist in the same folder as this 
+  # Terraform configuration file
+  source_dir = "../functions/register"
+  output_path = local.artifact_name_register
+}
 
-#   cors {
-#     allow_credentials = true
-#     allow_origins     = ["*"]
-#     allow_methods     = ["GET"]
-#     allow_headers     = ["*"]
-#     expose_headers    = ["keep-alive", "date"]
-#   }
-# }
+# create a Lambda function
+# see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function
+resource "aws_lambda_function" "register" {
+  # s3_bucket        = aws_s3_bucket.lambda.bucket
+  # s3_key           = local.artifact_name_get
+  role             = aws_iam_role.lambda-register.arn
+  function_name    = local.function_name_register
+  handler          = local.handler_name
+  filename         = local.artifact_name_get
+  source_code_hash = data.archive_file.lambda-register.output_base64sha256
 
-# # show the Function URL after creation
-# output "lambda_url-SS_get_dates" {
-#   value = aws_lambda_function_url.url_SS_get_dates.function_url
-# }
+  # see all available runtimes here: https://docs.aws.amazon.com/lambda/latest/dg/API_CreateFunction.html#SSS-CreateFunction-request-Runtime
+  runtime = "python3.9"
+}
 
-# # roles and policies as needed
+# create a Function URL for Lambda 
+# see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function_url
+resource "aws_lambda_function_url" "url_register" {
+  function_name      = aws_lambda_function.register.function_name
+  authorization_type = "NONE"
 
-# # create a role for the Lambda function to assume
-# # every service on AWS that wants to call other AWS services should first assume a role and
-# # then any policy attached to the role will give permissions
-# # to the service so it can interact with other AWS services
-# resource "aws_iam_role" "lambda-SS_get_dates" {
-#   name               = "iam-for-lambda-${local.function_name_SS_get_dates}"
-#   assume_role_policy = <<EOF
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Action": "sts:AssumeRole",
-#       "Principal": {
-#         "Service": "lambda.amazonaws.com"
-#       },
-#       "Effect": "Allow",
-#       "Sid": ""
-#     }
-#   ]
-# }
-# EOF
-# }
+  cors {
+    allow_credentials = true
+    allow_origins     = ["*"]
+    allow_methods     = ["PUT", "GET"]
+    allow_headers     = ["*"]
+    expose_headers    = ["keep-alive", "date"]
+  }
+}
 
-# # create a policy for publishing logs to CloudWatch
-# # see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy
-# resource "aws_iam_policy" "logs-SS_get_dates" {
-#   name        = "lambda-logging-${local.function_name_SS_get_dates}"
-#   description = "IAM policy for logging from a lambda"
+# show the Function URL after creation
+output "lambda_url-register" {
+  value = aws_lambda_function_url.url_register.function_url
+}
 
-#   policy = <<EOF
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Action": [
-#         "logs:CreateLogGroup",
-#         "logs:CreateLogStream",
-#         "logs:PutLogEvents",
-#         "dynamodb:GetItem",
-#         "dynamodb:Query",
-#         "dynamodb:Scan",
-#         "ssm:GetParameter",
-#         "ssm:GetParameters",
-#         "ssm:GetParametersByPath",
-#         "polly:SynthesizeSpeech"
-#       ],
-#       "Resource": "*",
-#       "Effect": "Allow"
-#     }
-#   ]
-# }
-# EOF
-# }
 
-# # attach the above policy to the function role
-# # see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
-# resource "aws_iam_role_policy_attachment" "lambda_logs_SS_get_dates" {
-#   role       = aws_iam_role.lambda-SS_get_dates.name
-#   policy_arn = aws_iam_policy.logs-SS_get_dates.arn
-# }
+#***map_data_get***#
+# create archive file from main.py
+data "archive_file" "zip_map_data_get" {
+  type = "zip"
+  # this file (main.py) needs to exist in the same folder as this 
+  # Terraform configuration file
+  source_dir = "../functions/map_data_get"
+  output_path = local.artifact_name_map_data_get
+}
+
+# create a Lambda function
+# see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function
+resource "aws_lambda_function" "map_data_get" {
+  # s3_bucket        = aws_s3_bucket.lambda.bucket
+  # s3_key           = local.artifact_name_get
+  role             = aws_iam_role.lambda-map_data_get.arn
+  function_name    = local.function_name_map_data_get
+  handler          = local.handler_name
+  filename         = local.artifact_name_get
+  source_code_hash = data.archive_file.lambda-map_data_get.output_base64sha256
+
+  # see all available runtimes here: https://docs.aws.amazon.com/lambda/latest/dg/API_CreateFunction.html#SSS-CreateFunction-request-Runtime
+  runtime = "python3.9"
+}
+
+# create a Function URL for Lambda 
+# see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function_url
+resource "aws_lambda_function_url" "url_map_data_get" {
+  function_name      = aws_lambda_function.map_data_get.function_name
+  authorization_type = "NONE"
+
+  cors {
+    allow_credentials = true
+    allow_origins     = ["*"]
+    allow_methods     = ["GET"]
+    allow_headers     = ["*"]
+    expose_headers    = ["keep-alive", "date"]
+  }
+}
+
+# show the Function URL after creation
+output "lambda_url-map_data_get" {
+  value = aws_lambda_function_url.url_map_data_get.function_url
+}
+
+
+### ROLES AND POLICIES ### 
+
+# roles and policies as needed
+# create a role for the Lambda function to assume
+# every service on AWS that wants to call other AWS services should first assume a role and
+# then any policy attached to the role will give permissions
+# to the service so it can interact with other AWS services
+
+#*** login ***#
+resource "aws_iam_role" "lambda-login" {
+  name               = "iam-for-lambda-${local.function_name_login}"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+# create a policy for publishing logs to CloudWatch
+# see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy
+resource "aws_iam_policy" "logs-login" {
+  name        = "lambda-logging-${local.function_name_login}"
+  description = "IAM policy for logging from a lambda"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "dynamodb:GetItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+        "ssm:GetParametersByPath",
+        "polly:SynthesizeSpeech"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    }
+  ]
+}
+EOF
+}
+
+# attach the above policy to the function role
+# see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
+resource "aws_iam_role_policy_attachment" "lambda_logs_login" {
+  role       = aws_iam_role.lambda-login.name
+  policy_arn = aws_iam_policy.logs-login.arn
+}
+
+
+#*** register ***#
+resource "aws_iam_role" "lambda-register" {
+  name               = "iam-for-lambda-${local.function_name_register}"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+# create a policy for publishing logs to CloudWatch
+# see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy
+resource "aws_iam_policy" "logs-register" {
+  name        = "lambda-logging-${local.function_name_register}"
+  description = "IAM policy for logging from a lambda"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "dynamodb:GetItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+        "ssm:GetParametersByPath",
+        "polly:SynthesizeSpeech"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    }
+  ]
+}
+EOF
+}
+
+# attach the above policy to the function role
+# see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
+resource "aws_iam_role_policy_attachment" "lambda_logs_register" {
+  role       = aws_iam_role.lambda-register.name
+  policy_arn = aws_iam_policy.logs-register.arn
+}
+
+
+#*** map_data_get ***#
+resource "aws_iam_role" "lambda-map_data_get" {
+  name               = "iam-for-lambda-${local.function_name_map_data_get}"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow",
+      "Sid": ""
+    }
+  ]
+}
+EOF
+}
+
+# create a policy for publishing logs to CloudWatch
+# see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy
+resource "aws_iam_policy" "logs-map_data_get" {
+  name        = "lambda-logging-${local.function_name_map_data_get}"
+  description = "IAM policy for logging from a lambda"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents",
+        "dynamodb:GetItem",
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "ssm:GetParameter",
+        "ssm:GetParameters",
+        "ssm:GetParametersByPath",
+        "polly:SynthesizeSpeech"
+      ],
+      "Resource": "*",
+      "Effect": "Allow"
+    }
+  ]
+}
+EOF
+}
+
+# attach the above policy to the function role
+# see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
+resource "aws_iam_role_policy_attachment" "lambda_logs_map_data_get" {
+  role       = aws_iam_role.lambda-map_data_get.name
+  policy_arn = aws_iam_policy.logs-map_data_get.arn
+}
+
+
 
 # Dynamodb table for storing login info
 # read the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table
