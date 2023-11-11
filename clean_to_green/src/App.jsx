@@ -1,5 +1,6 @@
 import react from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Navbar from "./components/navbar/navbar";
 import About from "./components/about/about";
 import Events from "./components/events/events";
 import Map from "./components/map/map";
@@ -10,13 +11,19 @@ import Contribute from "./components/contribute/contribute";
 const App = () => {
   return (
     <>
-      <BrowserRouter>
+        <Navbar />
+        <div className="container">
         <Routes>
-          <Route path="/about" component={About} />
-          <Route path="/events" component={Events} />
-          <Route path="/map" component={Map} />
+          <Route path="/" element={<About />} />
+          <Route path="/about" component={<About />} />
+          <Route path="/events" component={<Events />} />
+          <Route path="/map" element={<Map />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/donate" element={<Donate />} />
+          <Route path="/contribute" element={<Contribute />} />
         </Routes>
-      </BrowserRouter>
+        </div>
+
     </>
   );
 };
