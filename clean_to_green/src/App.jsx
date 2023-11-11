@@ -6,7 +6,7 @@ import Events from "./components/events/events";
 import Map from "./components/map/map";
 import Register from "./components/register/register";
 import Donate from "./components/donate/donate";
-import Contribute from "./components/contribute/contribute";
+import Contribute from "./components/contribute/Contribute";
 
 const App = () => {
   return (
