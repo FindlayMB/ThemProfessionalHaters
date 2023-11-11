@@ -6,7 +6,22 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+:root{
+  --color-bg: #1f1f38;
+  --color-bg-var: #2c2c6c;
+  --color-primary: #4db5ff;
+  --color-primary-var: rgba(77, 181, 255, 0.4);
+  --color-white: #fff;
+  --color-light: rgba(255,255,255,.6);
+  --color-black: #000000;
+  --transition: all 200ms ease;
+}
 
+html{
+  scroll-behavior: smooth;
+  /* background: radial-gradient(ellipse at bottom, #1b2735 10%, #090a0f 100%); */
+  background-color: rgb(5, 134, 91);
+}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
