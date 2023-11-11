@@ -30,6 +30,6 @@ CREATE TABLE USERS (
 User_name		varchar(30)		not NULL,
 User_pass		varchar(30)		not Null,
 User_email		varchar(30)		not NULL,
-uSER_phone		char(12)		not NUll,
+User_phone		char(12)		not NUll,
 PRIMARY KEY(User_pass)
 );
