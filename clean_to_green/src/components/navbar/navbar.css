@@ -18,7 +18,7 @@
 .navbar ul {
     list-style: none;
     display: flex;
-    gap: 1rem;
+    gap: 3rem;
     align-items: center;
     padding: 0 2%;
     /* justify-content: center; */

@@ -11,8 +11,8 @@ export default function Navbar() {
             <img src={logo} alt='logo' className='logo'/>
             </Link>
         <ul>
-            <CustomLink to ='/register' label='Register'>Register</CustomLink>
             <CustomLink to ='/about' label='About'>About</CustomLink>
+            <CustomLink to ='/register' label='Register'>Register</CustomLink>
             <CustomLink to ='/events' label='Events'>Events</CustomLink>
             <CustomLink to ='/map' label='Map'>Map</CustomLink>
             <CustomLink to ='/donate' label='Donate'>Donate</CustomLink>
