@@ -7,10 +7,14 @@
   
   /* Apply styles to the section */
   section {
-    background-color: #f5f5f5; /* Set your desired background color */
+    /* background-color: ; */
     padding: 40px 20px; /* Adjust padding as needed */
     text-align: center;
   }
+/* 
+  img{
+    z-index: -1;
+  } */
   
   /* Apply styles to the about_div */
   .about_div {
