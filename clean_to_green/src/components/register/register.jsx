@@ -78,7 +78,7 @@ const Register = () => {
               required
             />
           </label>
-          <br />
+          {/* <br /> */}
           <label>
             Passcode (Password):
             <input
@@ -88,7 +88,7 @@ const Register = () => {
               required
             />
           </label>
-          <br />
+          {/* <br /> */}
           <label>
             Username:
             <input
@@ -98,7 +98,7 @@ const Register = () => {
               required
             />
           </label>
-          <br />
+          {/* <br /> */}
           <label>
             Location:
             <input
@@ -108,7 +108,7 @@ const Register = () => {
               required
             />
           </label>
-          <br />
+          {/* <br /> */}
           <label>
             Phone:
             <input
@@ -118,7 +118,7 @@ const Register = () => {
               required
             />
           </label>
-          <br />
+          {/* <br /> */}
           <button type="submit">Register</button>
 
           <Link className= "linkbutton"to="/login">Login</Link>
