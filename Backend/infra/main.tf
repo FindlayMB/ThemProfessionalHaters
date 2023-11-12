@@ -633,81 +633,79 @@ resource "aws_iam_role_policy_attachment" "lambda_logs_map_data_get" {
   policy_arn = aws_iam_policy.logs-map_data_get.arn
 }
 
+# Dynamodb table for storing login info
+# read the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table
+resource "aws_dynamodb_table" "CLEAN_TO_GREEN_USER_LOGIN_INFO" {
+  name         = "CLEAN_TO_GREEN_USER_LOGIN_INFO"
+  billing_mode = "PROVISIONED"
 
+  # up to 8KB read per second (eventually consistent)
+  read_capacity = 1
 
+  # up to 1KB per second
+  write_capacity = 1
 
+  # we only need a student id to find an item in the table; therefore, we 
+  # don't need a sort key here
+  hash_key  = "User_email"
+  range_key  = "User_pass"
 
+  # the hash_key data type is string
 
+  # attribute {
+  #   name = "User_name"
+  #   type = "S"
+  # }
 
+  attribute {
+    name = "User_pass"
+    type = "S"
+  }
 
-# # Dynamodb table for storing login info
-# # read the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table
-# resource "aws_dynamodb_table" "CLEAN_TO_GREEN_USER_LOGIN_INFO" {
-#   name         = "CLEAN_TO_GREEN_USER_LOGIN_INFO"
-#   billing_mode = "PROVISIONED"
+  attribute {
+    name = "User_email"
+    type = "S"
+  }
 
-#   # up to 8KB read per second (eventually consistent)
-#   read_capacity = 1
+  # attribute {
+  #   name = "User_phone"
+  #   type = "S"
+  # }
 
-#   # up to 1KB per second
-#   write_capacity = 1
+  # attribute {
+  #   name = "Location"
+  #   type = "S"
+  # }
+}
 
-#   # we only need a student id to find an item in the table; therefore, we 
-#   # don't need a sort key here
-#   hash_key  = "User_email"
-#   range_key  = "User_pass"
+# Dynamodb table for storing donors info
+# read the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table
+resource "aws_dynamodb_table" "CLEAN_TO_GREEN_DONOR_INFO" {
+  name         = "CLEAN_TO_GREEN_DONOR_INFO"
+  billing_mode = "PROVISIONED"
 
-#   # the hash_key data type is string
+  # up to 8KB read per second (eventually consistent)
+  read_capacity = 1
 
-#   # attribute {
-#   #   name = "User_name"
-#   #   type = "S"
-#   # }
+  # up to 1KB per second
+  write_capacity = 1
 
-#   attribute {
-#     name = "User_pass"
-#     type = "S"
-#   }
+  # we only need a student id to find an item in the table; therefore, we 
+  # don't need a sort key here
+  hash_key  = "Donor_name"
 
-#   attribute {
-#     name = "User_email"
-#     type = "S"
-#   }
+  # the hash_key data type is string
 
-#   # attribute {
-#   #   name = "User_phone"
-#   #   type = "S"
-#   # }
-# }
+  attribute {
+    name = "Donor_name"
+    type = "S"
+  }
 
-# # Dynamodb table for storing donors info
-# # read the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table
-# resource "aws_dynamodb_table" "CLEAN_TO_GREEN_DONOR_INFO" {
-#   name         = "CLEAN_TO_GREEN_DONOR_INFO"
-#   billing_mode = "PROVISIONED"
-
-#   # up to 8KB read per second (eventually consistent)
-#   read_capacity = 1
-
-#   # up to 1KB per second
-#   write_capacity = 1
-
-#   # we only need a student id to find an item in the table; therefore, we 
-#   # don't need a sort key here
-#   hash_key  = "Donor_name"
-
-#   # the hash_key data type is string
-
-#   attribute {
-#     name = "Donor_name"
-#     type = "S"
-#   }
-
-#   # attribute {
-#   #   name = "Donated_amt"
-#   #   type = "N"
-#   # }
-# }
+  # attribute {
+  #   name = "Donated_amt"
+  #   type = "N"
+  # }
+}
 
 # # Dynamodb table for storing location info
 # # read the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table
@@ -754,36 +752,36 @@ resource "aws_iam_role_policy_attachment" "lambda_logs_map_data_get" {
 #   #   type = "N"
 #   # }
 
-# # Dynamodb table for storing event info
-# # read the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table
-# resource "aws_dynamodb_table" "CLEAN_TO_GREEN_EVENT_INFO" {
-#   name         = "CLEAN_TO_GREEN_EVENT_INFO"
-#   billing_mode = "PROVISIONED"
+# Dynamodb table for storing event info
+# read the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table
+resource "aws_dynamodb_table" "CLEAN_TO_GREEN_EVENT_INFO" {
+  name         = "CLEAN_TO_GREEN_EVENT_INFO"
+  billing_mode = "PROVISIONED"
 
-#   # up to 8KB read per second (eventually consistent)
-#   read_capacity = 1
+  # up to 8KB read per second (eventually consistent)
+  read_capacity = 1
 
-#   # up to 1KB per second
-#   write_capacity = 1
+  # up to 1KB per second
+  write_capacity = 1
 
-#   # we only need a student id to find an item in the table; therefore, we 
-#   # don't need a sort key here
-#   hash_key  = "Location"
+  # we only need a student id to find an item in the table; therefore, we 
+  # don't need a sort key here
+  hash_key  = "Location"
 
-#   # the hash_key data type is string
+  # the hash_key data type is string
 
-#   attribute {
-#     name = "Location"
-#     type = "S"
-#   }
+  attribute {
+    name = "Location"
+    type = "S"
+  }
 
-#   # attribute {
-#   #   name = "Garbage_amt"
-#   #   type = "N"
-#   # }
+  # attribute {
+  #   name = "Garbage_amt"
+  #   type = "N"
+  # }
 
-#   # attribute {
-#   #   name = "Date"
-#   #   type = "S"
-#   # }
-# }
+  # attribute {
+  #   name = "Date"
+  #   type = "S"
+  # }
+}
