@@ -43,12 +43,12 @@ const Contribute = () => {
   };
 
   const onSubmitForm = async (e) => {
+    xButton();
     e.preventDefault();
     let tempDict = {"Location_code": location,"Garbage_val": scale}
 
     const writeButton = document.getElementById("write-button");
     writeButton.disabled = true;
-
     const promise = await fetch(
       "https://wseslxtj6g5tsqfc5q76gefd4u0oyelt.lambda-url.ca-central-1.on.aws/",
       { method: "POST", 
@@ -350,7 +350,7 @@ const Contribute = () => {
               <option value="10">10</option>
             </select>
 
-            <button id="write-button" type="submit" onClick={xButton}>
+            <button id="write-button" type="submit">
               {" "}
               Submit{" "}
             </button>
