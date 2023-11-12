@@ -1,0 +1,36 @@
+/* FILEPATH: /c:/Users/alyos/OneDrive - University of Calgary/Desktop/ThemProfessionalHaters/clean_to_green/src/components/navbar/navbar.css */
+
+.navbar {
+  display: flex;
+  flex-flow:row;
+  justify-content: space-between;
+  align-items: center;
+  /* list-style: none; */
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sitetitle img{
+    width: 15vh;
+}
+
+.navbar ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 0 2%;
+    /* justify-content: center; */
+}
+
+.navbar a{
+    text-decoration: none;
+    gap: 3rem;
+    font-size: larger;
+}
+
+
+.navbar a:hover{
+    color: red;    
+}
