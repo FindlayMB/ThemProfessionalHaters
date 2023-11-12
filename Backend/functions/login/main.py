@@ -40,7 +40,19 @@ def lambda_handler(event, context):
 
     # If user not found, return appropriate message
     else:
+            "statusCode": 200,
+            "body": json.dumps({
+                "User_name": user_data['User_name'],
+                # "Location": user_data['Location'],
+                # "User_phone": user_data['User_phone']
+            })
+        }
+
+    # If user not found, return appropriate message
+    else:
         return {
+            "statusCode": 200,
+            "body": json.dumps({"message": "0"})
             "statusCode": 200,
             "body": json.dumps({"message": "0"})
         }
