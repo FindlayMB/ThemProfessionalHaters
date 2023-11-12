@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import "./contribute.css";
 const Contribute = () => {
   const [location, setLoc] = useState("");
   const [scale, setScale] = useState("");
