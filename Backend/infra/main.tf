@@ -726,9 +726,15 @@ resource "aws_dynamodb_table" "CLEAN_TO_GREEN_LOCATION_INFO" {
 
   # we only need a student id to find an item in the table; therefore, we 
   # don't need a sort key here
-  hash_key  = "Location"
+  hash_key  = "Location_code"
+  range_key  = "Location"
 
   # the hash_key data type is string
+
+  attribute {
+    name = "Location_code"
+    type = "S"
+  }
 
   attribute {
     name = "Location"
@@ -736,12 +742,17 @@ resource "aws_dynamodb_table" "CLEAN_TO_GREEN_LOCATION_INFO" {
   }
 
   # attribute {
-  #   name = "Garbage_amt"
+  #   name = "Garbage_sum"
   #   type = "N"
   # }
 
   # attribute {
   #   name = "Input_num"
+  #   type = "N"
+  # }
+
+  # attribute {
+  #   name = "Sector"
   #   type = "N"
   # }
 }
