@@ -5,7 +5,6 @@ import ReactDOM from "react-dom/client";
 import './map.css';
 
 import mapboxgl from 'mapbox-gl'
-// import Popup from "./popup";
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZi1icm93biIsImEiOiJjbG91bzZrNDMwaGZmMmpucnJobTZkZWJpIn0.g-F2iMN4W7Q1GYz21tIeAQ';
 //'sk.eyJ1IjoiZi1icm93biIsImEiOiJjbG91dGZvamowZWQwMmlsM3R4eG1yMjNpIn0.vCOfKM6p9CLM7vorW3jd2w';
@@ -32,24 +31,34 @@ export default function Map() {
       setZoom(map.getZoom().toFixed(2));
     });
 
-    map.on("click", e => {
-      const features = map.queryRenderedFeatures(e.point, {
-        layers: ["community"]
-      })
-      if (!features.length) {
-        return;
+    map.on("click", "community", (e) => {
+      const feature = e.features[0]
+      console.log(e.features[0].properties.comm_code)
+
+      const coordinates = e.features[0].geometry.coordinates.slice();
+
+      while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
       }
-      const feature = features[0]
-      
-      const popup = new mapboxgl.Popup({offset: [-50, 15]})
-        .setLngLat(feature.geometry.coordinates[0][0])
+      // map.setPaintProperty('community','fill-color',"blue","color":["match",["get","comm_code"], [e.features[0].properties.comm_code], "green", "blue"])
+      // feature.getCenter().geometry.coordinates
+      const popup = new mapboxgl.Popup({offset: [0, 0]})
+        .setLngLat(e.lngLat)
         .setHTML(
           `<div className='popup'><h1>${feature.properties.comm_code}</h1><h2>${feature.properties.name}</h2><h2>${feature.properties.sector}</h2></div>`
         )
         .addTo(map)
       }
+      
     );
-
+    map.on('mouseenter', 'community', () => {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+       
+      // Change it back to a pointer when it leaves.
+    map.on('mouseleave', 'community', () => {
+      map.getCanvas().style.cursor = '';
+    });
     // return () => map.remove()
   }, []);
 
