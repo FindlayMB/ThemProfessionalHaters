@@ -7,7 +7,7 @@ table = dynamodb_resource.Table('CLEAN_TO_GREEN_USER_LOGIN_INFO')
 
 def lambda_handler(event, context):
     # Receive and decode data
-    parts = event
+    parts = json.loads(event['body'])
 
     # Initialize variables with decoded data sent from frontend
     User_email = parts['User_email']

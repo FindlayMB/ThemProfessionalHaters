@@ -39,15 +39,14 @@ const Register = () => {
         method: "POST",
 
         headers: {
-          "Access-Control-Allow-Origin": '*',
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          User_email: email,
-          User_pass: passcode,
-          User_name: username,
-          Location: sector,
-          User_phone: phone,
+          "User_email": email,
+          "User_pass": passcode,
+          "User_name": username,
+          "Location": sector,
+          "User_phone": phone,
         }),
         // console.log(JSON.stringify({ "email": email, "passcode":passcode, "username":username, "location": sector, "Phone": phone }))
       });

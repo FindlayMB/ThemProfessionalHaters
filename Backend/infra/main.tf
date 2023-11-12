@@ -201,7 +201,7 @@ resource "aws_lambda_function_url" "url_donate" {
   cors {
     allow_credentials = true
     allow_origins     = ["*"]
-    allow_methods     = ["POST","PUT"]
+    allow_methods     = ["POST","PUT","GET"]
     allow_headers     = ["*"]
     expose_headers    = ["keep-alive", "date"]
   }
@@ -214,7 +214,7 @@ resource "aws_lambda_function_url" "url_event_get" {
   cors {
     allow_credentials = true
     allow_origins     = ["*"]
-    allow_methods     = ["GET", "DELETE"]
+    allow_methods     = ["GET", "DELETE","POST","PUT"]
     allow_headers     = ["*"]
     expose_headers    = ["keep-alive", "date"]
   }
@@ -229,7 +229,7 @@ resource "aws_lambda_function_url" "url_login" {
   cors {
     allow_credentials = true
     allow_origins     = ["*"]
-    allow_methods     = ["GET"]
+    allow_methods     = ["GET","POST","PUT"]
     allow_headers     = ["*"]
     expose_headers    = ["keep-alive", "date"]
   }
@@ -244,7 +244,7 @@ resource "aws_lambda_function_url" "url_register" {
   cors {
     allow_credentials = true
     allow_origins     = ["*"]
-    allow_methods     = ["PUT", "GET"]
+    allow_methods     = ["PUT", "GET","POST"]
     allow_headers     = ["*"]
     expose_headers    = ["keep-alive", "date"]
   }
@@ -259,7 +259,7 @@ resource "aws_lambda_function_url" "url_map_data_get" {
   cors {
     allow_credentials = true
     allow_origins     = ["*"]
-    allow_methods     = ["GET"]
+    allow_methods     = ["GET","POST","PUT"]
     allow_headers     = ["*"]
     expose_headers    = ["keep-alive", "date"]
   }

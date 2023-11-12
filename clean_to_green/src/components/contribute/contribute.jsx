@@ -44,17 +44,19 @@ const Contribute = () => {
 
   const onSubmitForm = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("location", location);
-    formData.append("scale", scale);
+    let tempDict = {"Location_code": location,"Garbage_val": scale}
 
     const writeButton = document.getElementById("write-button");
     writeButton.disabled = true;
 
     const promise = await fetch(
-      "API URL",
-      { method: "POST", body: formData }
-    );
+      "https://wseslxtj6g5tsqfc5q76gefd4u0oyelt.lambda-url.ca-central-1.on.aws/",
+      { method: "POST", 
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({...tempDict, }),
+    });
 
     try {
       const returnInfo = await promise.json();
@@ -101,7 +103,7 @@ const Contribute = () => {
               onChange={(e) => setLoc(e.target.value)}
             >
               <option value="">Select Location</option>
-              <option value="Location1">Location 1</option>
+              <option value="BYV">Location 1</option>
               <option value="Location2">Location 2</option>
               
             </select>
@@ -117,14 +119,14 @@ const Contribute = () => {
               <option value="">Select Scale</option>
               <option value="1">1</option>
               <option value="2">2</option>
-              <option value="1">3</option>
-              <option value="2">4</option>
-              <option value="1">5</option>
-              <option value="2">6</option>
-              <option value="1">7</option>
-              <option value="2">8</option>
-              <option value="1">9</option>
-              <option value="2">10</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
             </select>
 
             <button id="write-button" type="submit">
