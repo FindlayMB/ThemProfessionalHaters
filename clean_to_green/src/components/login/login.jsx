@@ -36,7 +36,7 @@ const Login = () => {
         // console.log(JSON.stringify({ "email": email, "passcode":passcode, "username":username, "location": sector, "Phone": phone }))
       });
 
-      if (response.ok) {
+      if (response["body"]["User_name"]) {
         console.log("Login successful!", response);
       } else {
         console.error("Login failed:", response.statusText);
