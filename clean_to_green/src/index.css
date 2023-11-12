@@ -30,6 +30,12 @@ code {
     monospace;
 }
 
+
+.mapboxgl-popup {
+  max-width: 400px;
+  font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
 section{
   align-items: center;
   padding:2vh 5vh;
