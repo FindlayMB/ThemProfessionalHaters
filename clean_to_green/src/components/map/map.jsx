@@ -7,8 +7,7 @@ import './map.css';
 import mapboxgl from 'mapbox-gl'
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API_KEY;
-//'pk.eyJ1IjoiZi1icm93biIsImEiOiJjbG91bzZrNDMwaGZmMmpucnJobTZkZWJpIn0.g-F2iMN4W7Q1GYz21tIeAQ';
-//'sk.eyJ1IjoiZi1icm93biIsImEiOiJjbG91dGZvamowZWQwMmlsM3R4eG1yMjNpIn0.vCOfKM6p9CLM7vorW3jd2w';
+
 
 export default function Map() {
   const mapContainer = useRef(null);
