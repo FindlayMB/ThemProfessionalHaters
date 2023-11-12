@@ -1,20 +1,70 @@
-import React from 'react'
+import React, { useRef, useEffect, useState } from 'react';
+// import { ReactDOM } from 'react-dom';
+// import { ReactDOM } from 'react';
+import ReactDOM from "react-dom/client";
+import './map.css';
 
-const map = () => {
+import mapboxgl from 'mapbox-gl'
+// import Popup from "./popup";
+
+mapboxgl.accessToken = 'pk.eyJ1IjoiZi1icm93biIsImEiOiJjbG91bzZrNDMwaGZmMmpucnJobTZkZWJpIn0.g-F2iMN4W7Q1GYz21tIeAQ';
+//'sk.eyJ1IjoiZi1icm93biIsImEiOiJjbG91dGZvamowZWQwMmlsM3R4eG1yMjNpIn0.vCOfKM6p9CLM7vorW3jd2w';
+
+export default function Map() {
+  const mapContainer = useRef(null);
+  const [lng, setLng] = useState(-114.0642);
+  const [lat, setLat] = useState(51.0235);
+  const [zoom, setZoom] = useState(10.13);
+  // const popupRef = useRef(new mapboxgl.Popup({offset: 15}));
+
+  useEffect(() => {
+    // if (map.current) return; // initialize map only once
+    const map = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: 'mapbox://styles/f-brown/clouov3f000gj01qdava0736f',
+      center: [lng, lat],
+      zoom: zoom
+    });
+    
+    map.on('move', () => {
+      setLng(map.getCenter().lng.toFixed(4));
+      setLat(map.getCenter().lat.toFixed(4));
+      setZoom(map.getZoom().toFixed(2));
+    });
+
+    map.on("click", e => {
+      const features = map.queryRenderedFeatures(e.point, {
+        layers: ["community"]
+      })
+      if (!features.length) {
+        return;
+      }
+      const feature = features[0]
+      
+      const popup = new mapboxgl.Popup({offset: [-50, 15]})
+        .setLngLat(feature.geometry.coordinates[0][0])
+        .setHTML(
+          `<div className='popup'><h1>${feature.properties.comm_code}</h1><h2>${feature.properties.name}</h2><h2>${feature.properties.sector}</h2></div>`
+        )
+        .addTo(map)
+      }
+    );
+
+    // return () => map.remove()
+  }, []);
+
+
   return (
     
     <div>
-        map
-        {/* <iframe allow="geolocation" src="https://data.calgary.ca/dataset/Community-Boundaries/ab7m-fwn6/embed?width=800&height=600" width="800" height="600" style={{border: 0, padding: 0, margin: 0}}></iframe> */}
-        
-        <iframe allow="geolocation" src="https://data.calgary.ca/dataset/Community-Boundaries/ab7m-fwn6/embed?width=800&height=600" width="800" height="600" style={{border: 0, padding: 0, margin: 0}}></iframe>
-        {/* <script type="text/javascript" charset="UTF-8" data-locale="en" data-socrata-domain="data.calgary.ca" src="https://data.calgary.ca/component/visualization/v1/socrata-visualizations-loader.js"></script>
-        <a class="socrata-visualization-embed" data-embed-version="1" 
-          data-height="600" data-socrata-domain="data.calgary.ca" data-vizcan-uid="ab7m-fwn6" data-vif="{&quot;configuration&quot;:{&quot;viewSourceDataLink&quot;:true,&quot;mapCenterAndZoom&quot;:{&quot;center&quot;:{&quot;lng&quot;:-114.08785069999999,&quot;lat&quot;:51.02799205170098},&quot;zoom&quot;:8.98331448977039},&quot;basemapOptions&quot;:{&quot;searchBoundaryLowerRightLongitude&quot;:-113.859905274451,&quot;searchBoundaryUpperLeftLongitude&quot;:-114.315796136221,&quot;searchBoundaryUpperLeftLatitude&quot;:51.2124253175644,&quot;navigationControl&quot;:true,&quot;basemapStyle&quot;:&quot;mapbox://styles/mapbox/light-v9&quot;,&quot;geoCoderControl&quot;:false,&quot;geoLocateControl&quot;:true,&quot;searchBoundaryLowerRightLatitude&quot;:50.8428220340678},&quot;mapPitchAndBearing&quot;:{&quot;bearing&quot;:0,&quot;pitch&quot;:0},&quot;datasetMetadata&quot;:false,&quot;showLegendOpened&quot;:true,&quot;panAndZoom&quot;:true,&quot;locateUser&quot;:false},&quot;series&quot;:[{&quot;visible&quot;:true,&quot;color&quot;:{&quot;palette&quot;:&quot;custom&quot;,&quot;customPalette&quot;:{&quot;class&quot;:{&quot;category&quot;:{&quot;Residential&quot;:{&quot;dashed&quot;:false,&quot;color&quot;:&quot;#f98d27&quot;,&quot;charmName&quot;:&quot;&quot;,&quot;index&quot;:0,&quot;id&quot;:&quot;Residential&quot;,&quot;label&quot;:&quot;Residential&quot;},&quot;Industrial&quot;:{&quot;dashed&quot;:false,&quot;color&quot;:&quot;#894baa&quot;,&quot;charmName&quot;:&quot;&quot;,&quot;index&quot;:2,&quot;id&quot;:&quot;Industrial&quot;,&quot;label&quot;:&quot;Industrial&quot;},&quot;Major Park&quot;:{&quot;dashed&quot;:false,&quot;color&quot;:&quot;#31a75a&quot;,&quot;charmName&quot;:&quot;&quot;,&quot;index&quot;:3,&quot;id&quot;:&quot;Major Park&quot;,&quot;label&quot;:&quot;Major Park&quot;},&quot;Residual Sub Area&quot;:{&quot;dashed&quot;:false,&quot;color&quot;:&quot;#cccccc&quot;,&quot;charmName&quot;:&quot;&quot;,&quot;index&quot;:1,&quot;id&quot;:&quot;Residual Sub Area&quot;,&quot;label&quot;:&quot;Residual Sub Area&quot;}}}},&quot;primary&quot;:&quot;#eb6900&quot;},&quot;mapOptions&quot;:{&quot;colorByQuantificationMethod&quot;:&quot;category&quot;,&quot;simplificationLevel&quot;:&quot;1&quot;,&quot;mapFlyoutTitleColumnName&quot;:&quot;class&quot;,&quot;colorBoundariesBy&quot;:&quot;class&quot;,&quot;mapType&quot;:&quot;boundaryMap&quot;,&quot;shapeOutlineWidth&quot;:0.5,&quot;additionalFlyoutColumns&quot;:[&quot;class_code&quot;,&quot;comm_code&quot;,&quot;name&quot;,&quot;sector&quot;,&quot;srg&quot;,&quot;comm_structure&quot;]},&quot;showLegend&quot;:true,&quot;type&quot;:&quot;map&quot;,&quot;dataSource&quot;:{&quot;measure&quot;:{&quot;aggregationFunction&quot;:&quot;count&quot;},&quot;name&quot;:&quot;Community Boundaries layer&quot;,&quot;filters&quot;:[{&quot;function&quot;:&quot;noop&quot;,&quot;isDrilldown&quot;:false,&quot;columnName&quot;:&quot;comm_structure&quot;,&quot;isHidden&quot;:false,&quot;arguments&quot;:null},{&quot;function&quot;:&quot;noop&quot;,&quot;isDrilldown&quot;:false,&quot;columnName&quot;:&quot;sector&quot;,&quot;isHidden&quot;:false,&quot;arguments&quot;:null},{&quot;function&quot;:&quot;binaryOperator&quot;,&quot;isDrilldown&quot;:false,&quot;columnName&quot;:&quot;class&quot;,&quot;isHidden&quot;:false,&quot;arguments&quot;:[{&quot;operator&quot;:&quot;=&quot;,&quot;operand&quot;:&quot;Residential&quot;},{&quot;operator&quot;:&quot;=&quot;,&quot;operand&quot;:&quot;Major Park&quot;}],&quot;joinOn&quot;:&quot;OR&quot;}],&quot;type&quot;:&quot;socrata.soql&quot;,&quot;datasetUid&quot;:&quot;surr-xmvs&quot;,&quot;dimension&quot;:{&quot;columnName&quot;:&quot;multipolygon&quot;,&quot;aggregationFunction&quot;:null}},&quot;primary&quot;:true,&quot;label&quot;:null}],&quot;format&quot;:{&quot;type&quot;:&quot;visualization_interchange_format&quot;,&quot;version&quot;:4},&quot;description&quot;:&quot;&quot;,&quot;id&quot;:&quot;d0441f3b-afcd-4193-bcac-0a9a4e16d5f5&quot;,&quot;title&quot;:&quot;&quot;,&quot;currentMapLayerIndex&quot;:0}" 
-          data-width="800" href="https://data.calgary.ca/Base-Maps/Community-District-Boundaries/surr-xmvs?referrer=embed" 
-          rel="external" target="_blank">View the data</a> */}
+
+      {/* <div className="sidebar">
+        Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
+      </div> */}
+      <div ref={mapContainer} className="map-container" />
+
     </div>
   )
 }
 
-export default map
+
