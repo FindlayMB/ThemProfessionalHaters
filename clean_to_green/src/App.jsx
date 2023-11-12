@@ -7,7 +7,8 @@ import Map from "./components/map/map";
 import Register from "./components/register/register";
 import Donate from "./components/donate/donate";
 import Contribute from "./components/contribute/contribute";
-
+import ErrorPage from "./components/errorPage/errorPage";
+import Login from "./components/login/login";
 const App = () => {
   return (
     <>
@@ -18,9 +19,11 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/events" element={<Events />} />
           <Route path="/map" element={<Map />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/donate" element={<Donate />} />
           <Route path="/contribute" element={<Contribute />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
         {/* </div> */}
 

@@ -1,0 +1,77 @@
+/* Reset some default styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Apply styles to the section */
+  section {
+    /* background-color: ; */
+    padding: 40px 20px; /* Adjust padding as needed */
+    text-align: center;
+  }
+/* 
+  img{
+    z-index: -1;
+  } */
+  
+  /* Apply styles to the about_div */
+  .about_div {
+    max-width: 800px; /* Adjust the maximum width as needed */
+    margin: 0 auto; /* Center the content */
+  }
+  
+  /* Apply styles to the about_text */
+  .about_text {
+    background-color: #fff; /* Set your desired background color */
+    padding: 20px; /* Adjust padding as needed */
+    border-radius: 8px; /* Add border-radius for rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+  }
+  
+  /* Apply styles to the About_title */
+  .About_title {
+    color: #007bff; /* Set your desired text color */
+  }
+  
+  /* Apply styles to the paragraph text */
+  .about_text p {
+    margin-bottom: 20px; /* Adjust the margin as needed */
+    color: #555; /* Set your desired text color */
+    font-size: 16px; /* Set your desired font size */
+    line-height: 1.5; /* Set your desired line height */
+  }
+  
+  /* Apply styles to the bullet points */
+  .about_text ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* Apply styles to each list item */
+  .about_text li {
+    padding-left: 20px;
+    position: relative;
+    margin-bottom: 10px;
+  }
+  
+  /* Apply styles to the Join Us on the Journey section */
+  .about_text .join_us {
+    margin-top: 30px;
+    font-weight: bold;
+  }
+  
+  /* Apply styles to the footer section */
+  .about_text .footer {
+    margin-top: 20px;
+    color: #888; /* Set your desired text color */
+  }
+  
+  /* Media query for responsive design */
+  @media (max-width: 600px) {
+    .about_div {
+      max-width: 100%; /* Adjust the maximum width for smaller screens */
+    }
+  }
+  
