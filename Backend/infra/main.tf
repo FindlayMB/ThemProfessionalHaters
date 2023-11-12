@@ -553,6 +553,8 @@ resource "aws_iam_policy" "logs-register" {
         "logs:CreateLogStream",
         "logs:PutLogEvents",
         "dynamodb:GetItem",
+        "dynamodb:PostItem",
+        "dynamodb:PutItem",
         "dynamodb:Query",
         "dynamodb:Scan",
         "ssm:GetParameter",
