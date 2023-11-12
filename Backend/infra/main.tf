@@ -176,9 +176,6 @@ resource "aws_lambda_function" "map_data_get" {
   # see all available runtimes here: https://docs.aws.amazon.com/lambda/latest/dg/API_CreateFunction.html#SSS-CreateFunction-request-Runtime
   runtime = "python3.9"
 }
-  # see all available runtimes here: https://docs.aws.amazon.com/lambda/latest/dg/API_CreateFunction.html#SSS-CreateFunction-request-Runtime
-  runtime = "python3.9"
-}
 
 # create a Function URL for Lambda 
 # see the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function_url
@@ -636,13 +633,6 @@ resource "aws_iam_role_policy_attachment" "lambda_logs_map_data_get" {
   policy_arn = aws_iam_policy.logs-map_data_get.arn
 }
 
-
-
-
-
-
-
-
 # Dynamodb table for storing login info
 # read the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table
 resource "aws_dynamodb_table" "CLEAN_TO_GREEN_USER_LOGIN_INFO" {
@@ -681,6 +671,11 @@ resource "aws_dynamodb_table" "CLEAN_TO_GREEN_USER_LOGIN_INFO" {
   #   name = "User_phone"
   #   type = "S"
   # }
+
+  # attribute {
+  #   name = "Location"
+  #   type = "S"
+  # }
 }
 
 # Dynamodb table for storing donors info
@@ -712,39 +707,50 @@ resource "aws_dynamodb_table" "CLEAN_TO_GREEN_DONOR_INFO" {
   # }
 }
 
-# Dynamodb table for storing location info
-# read the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table
-resource "aws_dynamodb_table" "CLEAN_TO_GREEN_LOCATION_INFO" {
-  name         = "CLEAN_TO_GREEN_LOCATION_INFO"
-  billing_mode = "PROVISIONED"
+# # Dynamodb table for storing location info
+# # read the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table
+# resource "aws_dynamodb_table" "CLEAN_TO_GREEN_LOCATION_INFO" {
+#   name         = "CLEAN_TO_GREEN_LOCATION_INFO"
+#   billing_mode = "PROVISIONED"
 
-  # up to 8KB read per second (eventually consistent)
-  read_capacity = 1
+#   # up to 8KB read per second (eventually consistent)
+#   read_capacity = 1
 
-  # up to 1KB per second
-  write_capacity = 1
+#   # up to 1KB per second
+#   write_capacity = 1
 
-  # we only need a student id to find an item in the table; therefore, we 
-  # don't need a sort key here
-  hash_key  = "Location"
+#   # we only need a student id to find an item in the table; therefore, we 
+#   # don't need a sort key here
+#   hash_key  = "Location_code"
+#   range_key  = "Location"
 
-  # the hash_key data type is string
+#   # the hash_key data type is string
 
-  attribute {
-    name = "Location"
-    type = "S"
-  }
+#   attribute {
+#     name = "Location_code"
+#     type = "S"
+#   }
 
-  # attribute {
-  #   name = "Garbage_amt"
-  #   type = "N"
-  # }
+#   attribute {
+#     name = "Location"
+#     type = "S"
+#   }
 
-  # attribute {
-  #   name = "Input_num"
-  #   type = "N"
-  # }
-}
+#   # attribute {
+#   #   name = "Sector"
+#   #   type = "N"
+#   # }
+# }
+
+#   # attribute {
+#   #   name = "Garbage_sum"
+#   #   type = "N"
+#   # }
+
+#   # attribute {
+#   #   name = "Input_num"
+#   #   type = "N"
+#   # }
 
 # Dynamodb table for storing event info
 # read the docs: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/dynamodb_table
