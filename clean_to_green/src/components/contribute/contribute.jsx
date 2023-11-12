@@ -350,7 +350,7 @@ const Contribute = () => {
               <option value="10">10</option>
             </select>
 
-            <button id="write-button" type="submit">
+            <button id="write-button" type="submit" onClick={xButton}>
               {" "}
               Submit{" "}
             </button>
