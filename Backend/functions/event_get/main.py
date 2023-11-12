@@ -1,42 +1,32 @@
 import boto3
 import json
-from boto3.dynamodb.conditions import Key, Attr
+from decimal import Decimal
 
 dynamodb_resource = boto3.resource('dynamodb', region_name="ca-central-1")
-table = dynamodb_resource.Table('CLEAN_TO_GREEN_LOCATION_INFO')
+table = dynamodb_resource.Table('CLEAN_TO_GREEN_EVENT_INFO')
 
 def lambda_handler(event, context):
     try:
-        res = table.scan(ProjectionExpression="#loc, Garbage_sum, Input_num", ExpressionAttributeNames={"#loc": "Location"})['Items']
-
-        transformed_data = []
-
-        for item in res:
-            # Convert values to numbers
-            garbage_sum = float(item['Garbage_sum'])
-            input_num = float(item['Input_num'])
-
-            # Calculate Garbage_val
-            if input_num == 0:
-                garbage_val=0
-            else:
-                garbage_val = (garbage_sum / input_num)/10
-
-            # Create a new dictionary with the desired structure
-            transformed_item = {
-                'Location': item['Location'],
-                'Garbage_val': garbage_val
+        # Perform the scan
+        res = table.scan(
+            ProjectionExpression="#loc, Garbage_amt, #dt",
+            ExpressionAttributeNames={
+                "#loc": "Location",
+                "#dt": "Date"
             }
+        )['Items']
 
-            # Append the transformed item to the list
-            transformed_data.append(transformed_item)
-        print(transformed_data)
+        # Convert Decimal to float for JSON serialization
+        for item in res:
+            item['Garbage_amt'] = float(item['Garbage_amt'])
+
+        print(res)
 
         response = {
             "statusCode": 200,
             "body": json.dumps({
                 'message': "Success",
-                'data': transformed_data
+                'data': res
             })
         }
         return response
