@@ -14,8 +14,6 @@ const Login = () => {
     setPasscode(e.target.value);
   };
 
-
-
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -26,7 +24,7 @@ const Login = () => {
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
-            "Access-Control-Allow-Origin": '*',
+          "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -36,13 +34,19 @@ const Login = () => {
         // console.log(JSON.stringify({ "email": email, "passcode":passcode, "username":username, "location": sector, "Phone": phone }))
       });
 
-      if (response["body"]["User_name"]) {
-        console.log("Login successful!", response);
+      if (response.ok) {
+        const responseBody = await response.json();
+        if (responseBody["message"] == "0") {
+          console.error("Login failed: Invalid credentials");
+        } else {
+          const username = responseBody["User_name"]; // Change 'username' to the actual property name returned by the API
+          console.log("Login successful! Welcome, " + username + "!");
+        }
       } else {
         console.error("Login failed:", response.statusText);
       }
     } catch (error) {
-      console.error("Error during registration:", error.message);
+      console.error("Error during login:", error.message);
     }
   };
 
@@ -76,7 +80,9 @@ const Login = () => {
           <br />
 
           {/* <Link className="linkbutton"to="/login">Login</Link> */}
-          <button type="submit" className="linkbutton">Login</button>
+          <button type="submit" className="linkbutton">
+            Login
+          </button>
         </form>
       </div>
     </div>
