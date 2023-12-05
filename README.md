@@ -6,6 +6,7 @@ Team members:
 - Damon Mazurek
 - Aly Mohamed
 - Dawson van Vlaanderen
-- 
+- Nick Garcia
+- Sarah Qin
 
 # Clean-to-Green
